@@ -105,15 +105,104 @@ VITE_API_URL=http://localhost:3001
 
 ### 3️⃣ Configurar Google OAuth 2.0
 
-1. Ve a [Google Cloud Console](https://console.cloud.google.com/)
-2. Crea un nuevo proyecto o selecciona uno existente
-3. Habilita **Google+ API**
-4. Ve a **Credenciales** → **Crear credenciales** → **ID de cliente de OAuth 2.0**
-5. Configura:
-   - **Tipo de aplicación**: Aplicación web
-   - **Orígenes autorizados**: `http://localhost:5173`
-   - **URI de redireccionamiento**: `http://localhost:3001/api/auth/google/callback`
-6. Copia el **Client ID** y **Client Secret** a tu archivo `.env`
+#### Paso A: Crear Proyecto en Google Cloud Console
+
+1. **Accede a Google Cloud Console**
+   - Ve a: https://console.cloud.google.com/
+   - Inicia sesión con tu cuenta de Google
+
+2. **Crear Nuevo Proyecto**
+   - Haz clic en el selector de proyectos (arriba a la izquierda)
+   - Click en **"NUEVO PROYECTO"**
+   - Nombre del proyecto: `Corporate Pitch` (o el que prefieras)
+   - Click en **"CREAR"**
+   - Espera unos segundos y selecciona el proyecto creado
+
+#### Paso B: Habilitar Google+ API
+
+1. En el menú lateral (☰), ve a **"APIs y servicios"** → **"Biblioteca"**
+2. Busca: `Google+ API`
+3. Click en **"Google+ API"**
+4. Click en **"HABILITAR"**
+
+#### Paso C: Configurar Pantalla de Consentimiento OAuth
+
+1. Ve a **"APIs y servicios"** → **"Pantalla de consentimiento de OAuth"**
+2. Selecciona tipo de usuario: **"Externo"** (para desarrollo y pruebas)
+3. Click **"CREAR"**
+
+4. **Información de la aplicación:**
+   ```
+   Nombre de la aplicación: Corporate Pitch
+   Correo del usuario: tu-email@gmail.com
+   Logo de la aplicación: (opcional por ahora)
+   ```
+
+5. **Dominios autorizados:** (déjalo vacío por ahora)
+
+6. **Información de contacto del desarrollador:**
+   ```
+   tu-email@gmail.com
+   ```
+
+7. Click en **"GUARDAR Y CONTINUAR"**
+
+8. **Permisos** → Click **"GUARDAR Y CONTINUAR"** (sin agregar nada)
+
+9. **Usuarios de prueba:**
+   - Click **"+ AGREGAR USUARIOS"**
+   - Agrega tu email y otros emails que usarás para probar
+   - Click **"GUARDAR Y CONTINUAR"**
+
+10. **Resumen** → Click **"VOLVER AL PANEL"**
+
+#### Paso D: Crear Credenciales OAuth 2.0
+
+1. Ve a **"APIs y servicios"** → **"Credenciales"**
+2. Click en **"+ CREAR CREDENCIALES"** → **"ID de cliente de OAuth 2.0"**
+
+3. **Tipo de aplicación:** Selecciona **"Aplicación web"**
+
+4. **Configuración:**
+   ```
+   Nombre: Corporate Pitch Web Client
+   ```
+
+5. **Orígenes de JavaScript autorizados:**
+   - Click **"+ AGREGAR URI"**
+   - Agrega: `http://localhost:5173`
+   - Click **"+ AGREGAR URI"** nuevamente
+   - Agrega: `http://localhost:3001`
+
+6. **URIs de redireccionamiento autorizados:**
+   - Click **"+ AGREGAR URI"**
+   - Agrega: `http://localhost:3001/api/auth/google/callback`
+
+7. Click en **"CREAR"**
+
+#### Paso E: Copiar Credenciales
+
+Aparecerá un modal con tus credenciales:
+
+```
+ID de cliente: 123456789-abcdefghijklmnop.apps.googleusercontent.com
+Secreto del cliente: GOCSPX-aBcDeFgHiJkLmNoPqRsTuVwXyZ
+```
+
+**⚠️ IMPORTANTE:** Copia estos valores y pégalos en tu archivo `.env`:
+
+```env
+GOOGLE_CLIENT_ID=tu_id_de_cliente_copiado_aqui
+GOOGLE_CLIENT_SECRET=tu_secreto_de_cliente_copiado_aqui
+GOOGLE_CALLBACK_URL=http://localhost:3001/api/auth/google/callback
+```
+
+#### 🔒 Notas de Seguridad:
+
+- ✅ El archivo `.env` está en `.gitignore` y NO se subirá a GitHub
+- ✅ Mantén tus credenciales privadas
+- ✅ Para producción, actualiza las URIs con tu dominio real
+- ✅ En producción, cambia el modo de "Testing" a "Publicación" en Google Cloud Console
 
 ### 4️⃣ Iniciar Base de Datos
 
